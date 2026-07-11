@@ -1,0 +1,177 @@
+:root {
+  /* Fonts */
+  --font-title: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Colors - Deep Marine & Sonar Accents */
+  --bg-abyss: #040814;
+  /* Deepest background */
+  --bg-trench: #081125;
+  /* Secondary background / card base */
+  --bg-shelf: #0f1f3d;
+  /* Hover states / border accents */
+
+  --accent-cyan: #06b6d4;
+  /* Primary highlight (Sonar frequency) */
+  --accent-teal: #0d9488;
+  /* Secondary mapping highlight */
+  --accent-blue: #3b82f6;
+  /* Deep sea blue */
+
+  --text-active: #ffffff;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Special effects */
+  --glass-bg: rgba(8, 17, 37, 0.7);
+  --glass-border: rgba(6, 182, 212, 0.15);
+  --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.3);
+  --glow-cyan-strong: 0 0 35px rgba(6, 182, 212, 0.65);
+
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+
+  --navbar-height: 80px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
+}
+
+body {
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background-color: var(--bg-abyss);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Justified text for paragraphs - desktop only */
+p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-title);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  transition: var(--transition-smooth);
+}
+
+img {
+  max-width: 100%;
+}
+
+section {
+  width: 100%;
+  padding: 100px 8% 80px;
+  position: relative;
+}
+
+/* Common Section Titles with Sonar Indicator */
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-title h2 {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-active);
+  letter-spacing: -0.02em;
+  display: inline-block;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-teal));
+  border-radius: 2px;
+}
+
+/* Grid & Layout Containers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-abyss);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-shelf);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* Global Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  section {
+    padding: 80px 5% 60px;
+  }
+
+  .section-title {
+    margin-bottom: 40px;
+  }
+
+  .section-title h2 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  section {
+    padding: 60px 4% 40px;
+  }
+
+  .section-title {
+    margin-bottom: 30px;
+  }
+
+  .section-title h2 {
+    font-size: 1.5rem;
+  }
+}
