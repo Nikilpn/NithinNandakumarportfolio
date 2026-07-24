@@ -9,7 +9,7 @@ export default function DigitalTwin() {
     if (!canvas) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 
     const resize = () => {
@@ -22,101 +22,126 @@ export default function DigitalTwin() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Terrain / coastline
-    const terrainGeo = new THREE.PlaneGeometry(20, 14, 40, 30);
-    terrainGeo.rotateX(-Math.PI / 2);
-    const tPos = terrainGeo.attributes.position.array;
-    for (let i = 0; i < tPos.length / 3; i++) {
-      const x = tPos[i * 3];
-      const z = tPos[i * 3 + 2];
-      let height = 0;
-      if (z < -2 + Math.sin(x * 0.5) * 1.5) {
-        height = Math.sin(x * 0.4) * Math.cos(z * 0.3) * 0.8 + Math.sin(x * 1.2 + 2) * 0.3 + 0.2;
-      } else if (z < -1 + Math.sin(x * 0.5) * 1.5) {
-        height = ((z + 2 - Math.sin(x * 0.5) * 1.5) / 1) * -0.2;
-      } else {
-        height = -0.5 + Math.sin(x * 0.6) * Math.cos(z * 0.4) * 0.2;
-      }
-      tPos[i * 3 + 1] = height;
+    // ── Stars ──
+    const starCount = 600;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount * 3; i++) {
+      starPos[i] = (Math.random() - 0.5) * 200;
     }
-    terrainGeo.computeVertexNormals();
+    starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({
+      color: 0x06b6d4,
+      size: 0.3,
+      transparent: true,
+      opacity: 0.6,
+      sizeAttenuation: true,
+    });
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
 
-    const terrain = new THREE.Mesh(terrainGeo, new THREE.MeshPhongMaterial({
-      color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.03, flatShading: true, transparent: true, opacity: 0.15, side: THREE.DoubleSide,
-    }));
-    scene.add(terrain);
+    // ── Earth globe ──
+    const globe = new THREE.Mesh(
+      new THREE.SphereGeometry(1.8, 24, 24),
+      new THREE.MeshPhongMaterial({
+        color: 0x0a1628,
+        emissive: 0x06b6d4,
+        emissiveIntensity: 0.04,
+        transparent: true,
+        opacity: 0.35,
+      })
+    );
+    globe.position.set(0, 0, 0);
+    scene.add(globe);
 
-    const buildingMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.02, transparent: true, opacity: 0.2 });
-    [[-6, -3], [-4, -4.5], [-3, -2.5], [-5, -1.5], [-7, -4], [-2, -3.5], [-8, -2]].forEach(([bx, bz]) => {
-      const bw = 0.3 + Math.random() * 0.4;
-      const bh = 0.3 + Math.random() * 0.8;
-      const bd = 0.3 + Math.random() * 0.4;
-      const building = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), buildingMat);
-      building.position.set(bx, bh / 2, bz);
-      scene.add(building);
+    // Globe wireframe
+    const wireGlobe = new THREE.LineSegments(
+      new THREE.WireframeGeometry(new THREE.SphereGeometry(1.85, 16, 12)),
+      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.12 })
+    );
+    scene.add(wireGlobe);
+
+    // Latitude circles
+    const latMat = new THREE.LineBasicMaterial({ color: 0x0d9488, transparent: true, opacity: 0.1 });
+    for (let lat = -60; lat <= 60; lat += 30) {
+      const rad = (lat * Math.PI) / 180;
+      const r = 1.8 * Math.cos(rad);
+      const y = 1.8 * Math.sin(rad);
+      const pts = [];
+      for (let i = 0; i <= 36; i++) {
+        const a = (i / 36) * Math.PI * 2;
+        pts.push(new THREE.Vector3(r * Math.cos(a), y, r * Math.sin(a)));
+      }
+      const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), latMat);
+      scene.add(line);
+    }
+
+    // ── Satellites ──
+    const satMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const satellites = [
+      { radius: 3.5, speed: 0.5, tilt: 0.3, phase: 0 },
+      { radius: 4.0, speed: -0.4, tilt: -0.5, phase: 2 },
+      { radius: 3.0, speed: 0.6, tilt: 0.7, phase: 4 },
+      { radius: 4.5, speed: -0.3, tilt: -0.2, phase: 1 },
+    ].map((sp) => {
+      const sat = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), satMat);
+      const glow = new THREE.Mesh(
+        new THREE.SphereGeometry(0.16, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.2 })
+      );
+      sat.add(glow);
+      const g = new THREE.Group();
+      g.add(sat);
+      // Orbit path
+      const orbitPts = [];
+      for (let i = 0; i <= 48; i++) {
+        const a = (i / 48) * Math.PI * 2;
+        orbitPts.push(new THREE.Vector3(sp.radius * Math.cos(a), 0, sp.radius * Math.sin(a)));
+      }
+      const orbitLine = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(orbitPts),
+        new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.06 })
+      );
+      orbitLine.rotation.x = sp.tilt;
+      const orbitGroup = new THREE.Group();
+      orbitGroup.add(orbitLine);
+      scene.add(orbitGroup);
+
+      g.position.copy(orbitPts[0]);
+      g.rotation.x = sp.tilt;
+      scene.add(g);
+      return { group: g, orbitGroup, ...sp };
     });
 
-    const ocean = new THREE.Mesh(
-      new THREE.PlaneGeometry(20, 14, 30, 20).rotateX(-Math.PI / 2),
-      new THREE.MeshPhongMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.04, side: THREE.DoubleSide })
-    );
-    ocean.position.y = 0.05;
-    scene.add(ocean);
-
-    const surveyMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
-    const surveyPoints = [];
-    for (let i = 0; i < 12; i++) {
-      const angle = (i / 12) * Math.PI;
-      const sx = -2 + Math.sin(angle * 1.5) * 4;
-      const sz = -2 + Math.cos(angle * 0.8) * 3;
-      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), surveyMat);
-      dot.position.set(sx, 0.1, sz);
-      scene.add(dot);
-      surveyPoints.push(dot);
-      const glow = new THREE.Mesh(
-        new THREE.RingGeometry(0.12, 0.18, 16),
-        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.15, side: THREE.DoubleSide })
-      );
-      glow.position.copy(dot.position);
-      glow.rotation.x = -Math.PI / 2;
-      scene.add(glow);
-      surveyPoints.push(glow);
-    }
-
-    const ambient = new THREE.AmbientLight(0x88ccff, 0.2);
+    // ── Lights ──
+    const ambient = new THREE.AmbientLight(0x446688, 0.15);
     scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0x88ccff, 0.4);
-    dirLight.position.set(8, 15, 5);
-    scene.add(dirLight);
-    const fillLight = new THREE.DirectionalLight(0x06b6d4, 0.15);
-    fillLight.position.set(-5, 5, -8);
-    scene.add(fillLight);
+    const light = new THREE.DirectionalLight(0x88ccff, 0.3);
+    light.position.set(5, 10, 7);
+    scene.add(light);
 
-    camera.position.set(5, 8, 12);
-    camera.lookAt(-2, 0, 0);
+    camera.position.set(0, 2, 8);
+    camera.lookAt(0, 0, 0);
 
+    // ── Animation ──
     let t = 0;
     const anim = () => {
-      t += 0.004;
-      const radius = 13;
-      camera.position.set(
-        -2 + radius * Math.sin(t * 0.15) * 0.4,
-        6 + Math.sin(t * 0.25) * 0.8,
-        radius * Math.cos(t * 0.15)
-      );
-      camera.lookAt(-2, -0.2, 0);
+      t += 0.005;
 
-      const oPos = ocean.geometry.attributes.position.array;
-      for (let i = 0; i < oPos.length / 3; i++) {
-        oPos[i * 3 + 1] = Math.sin(oPos[i * 3] * 0.5 + t * 1.2) * 0.04 + Math.cos(oPos[i * 3 + 2] * 0.4 + t) * 0.03;
-      }
-      ocean.geometry.attributes.position.needsUpdate = true;
-
-      surveyPoints.forEach((sp, i) => {
-        if (i % 2 === 0) {
-          const scale = 1 + Math.sin(t * 1.5 + i) * 0.2;
-          sp.scale.set(scale, scale, scale);
+      globe.rotation.y = t * 0.2;
+      wireGlobe.rotation.y = t * 0.2;
+      scene.children.forEach((child) => {
+        if (child.isLine && child.material.color && child.material.color.getHex() === 0x0d9488) {
+          child.rotation.y = t * 0.2;
         }
+      });
+
+      satellites.forEach((sp) => {
+        const angle = t * sp.speed + sp.phase;
+        const x = sp.radius * Math.cos(angle);
+        const z = sp.radius * Math.sin(angle);
+        sp.group.position.set(x, 0, z);
+        // Keep orbiting lines static (already added)
       });
 
       renderer.render(scene, camera);

@@ -299,52 +299,38 @@ function InteractiveShipCanvas() {
             // Transducer point (bottom of the keel) to emit sonar from
             const transducerPos = projShipPoints[1]; // bottom center bow/mid
 
-            // DRAW SONAR SWEEP BEAM FROM SHIP
-            const scanAngle = Math.sin(time * 3) * 0.25;
-            const sonarBeamLength = h * 0.35;
-            const beamTargetX = transducerPos.x + Math.sin(scanAngle) * sonarBeamLength;
-            const beamTargetY = h * 0.82 + Math.cos(scanAngle) * 5;
+            // CELESTIAL ORBIT RINGS
+            const orbitCenterX = shipBaseX;
+            const orbitCenterY = h * 0.72;
 
-            // Draw Sonar Cone (Translucent gradient fill)
-            const gradBeam = ctx.createLinearGradient(
-                transducerPos.x,
-                transducerPos.y,
-                beamTargetX,
-                beamTargetY
-            );
-            gradBeam.addColorStop(0, "rgba(6, 182, 212, 0.45)");
-            gradBeam.addColorStop(0.3, "rgba(6, 182, 212, 0.15)");
-            gradBeam.addColorStop(1, "rgba(13, 148, 136, 0.01)");
+            // Three orbital rings with different sizes and speeds
+            const ringConfigs = [
+                { radius: 50, speed: 1.2, dash: 0, opacity: 0.12 },
+                { radius: 80, speed: -0.8, dash: 4, opacity: 0.08 },
+                { radius: 110, speed: 1.0, dash: 0, opacity: 0.06 },
+            ];
 
-            ctx.fillStyle = gradBeam;
-            ctx.beginPath();
-            ctx.moveTo(transducerPos.x, transducerPos.y);
-            ctx.lineTo(beamTargetX - 60, h * 0.82);
-            ctx.lineTo(beamTargetX + 60, h * 0.82);
-            ctx.closePath();
-            ctx.fill();
+            ringConfigs.forEach((rc, ri) => {
+                const angle = time * rc.speed + ri * Math.PI / 3;
+                ctx.strokeStyle = `rgba(6, 182, 212, ${rc.opacity})`;
+                ctx.lineWidth = 0.5;
+                ctx.setLineDash(rc.dash ? [rc.dash, rc.dash] : []);
+                ctx.beginPath();
+                ctx.ellipse(orbitCenterX, orbitCenterY, rc.radius, rc.radius * 0.35, angle * 0.1, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
 
-            // Scan Laser Sweeping Line
-            ctx.strokeStyle = "rgba(6, 182, 212, 0.7)";
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(transducerPos.x, transducerPos.y);
-            ctx.lineTo(beamTargetX, beamTargetY);
-            ctx.stroke();
-
-            // Sonar Echo wavefront ripples emanating from beam path contact
-            ctx.strokeStyle = "rgba(6, 182, 212, 0.4)";
-            ctx.lineWidth = 1;
-            const ringPulse = (time * 40) % 60;
-            ctx.beginPath();
-            ctx.ellipse(beamTargetX, beamTargetY, ringPulse * 1.5, ringPulse * 0.5, 0, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // A second delayed ripple
-            const ringPulse2 = ((time * 40) + 30) % 60;
-            ctx.beginPath();
-            ctx.ellipse(beamTargetX, beamTargetY, ringPulse2 * 1.5, ringPulse2 * 0.5, 0, 0, Math.PI * 2);
-            ctx.stroke();
+                // Orbiting dots
+                for (let d = 0; d < 3; d++) {
+                    const da = angle + (d * Math.PI * 2) / 3;
+                    const dx = orbitCenterX + rc.radius * Math.cos(da);
+                    const dy = orbitCenterY + rc.radius * 0.35 * Math.sin(da);
+                    ctx.fillStyle = `rgba(6, 182, 212, ${0.3 - ri * 0.08})`;
+                    ctx.beginPath();
+                    ctx.arc(dx, dy, 2 - ri * 0.3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
 
             // ==========================================
             // 4. DRAW THE 3D MOUNTED SHIP MODEL
@@ -467,26 +453,16 @@ function InteractiveShipCanvas() {
                 ctx.stroke();
             }
 
-            // HIGHLIGHT SONAR SCAN STRIP IN REAL-TIME (Bathymetry Scan Area)
+            // SUBTLE GRID PULSE
+            const pulsePhase = Math.sin(time * 1.5) * 0.5 + 0.5;
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     const pt = gridPoints[r][c];
-                    const distToBeam = Math.abs(pt.x - beamTargetX);
-
-                    // If within the scan beam cone, paint scanning feedback
-                    if (distToBeam < 50 && Math.abs(pt.y - beamTargetY) < 40) {
-                        ctx.fillStyle = `rgba(6, 182, 212, ${0.45 * (1 - distToBeam / 50)})`;
-                        ctx.beginPath();
-                        ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
-                        ctx.fill();
-
-                        // Draw scanning connection lines
-                        ctx.strokeStyle = `rgba(13, 148, 136, ${0.2 * (1 - distToBeam / 50)})`;
-                        ctx.beginPath();
-                        ctx.moveTo(pt.x, pt.y);
-                        ctx.lineTo(beamTargetX, beamTargetY);
-                        ctx.stroke();
-                    }
+                    const pulse = Math.sin((r + c) * 0.5 + time * 2) * 0.3 + 0.7;
+                    ctx.fillStyle = `rgba(6, 182, 212, ${0.08 * pulse})`;
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
                 }
             }
 

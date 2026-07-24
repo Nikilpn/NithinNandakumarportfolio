@@ -9,7 +9,7 @@ export default function PointCloud() {
     if (!canvas) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 
     const resize = () => {
@@ -17,155 +17,138 @@ export default function PointCloud() {
       const h = canvas.clientHeight;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
-      camera.position.set(3, 2, 4);
-      camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
     };
     resize();
     window.addEventListener("resize", resize);
 
-    const pointCount = 5000;
-    const geo = new THREE.BufferGeometry();
-    const pos = new Float32Array(pointCount * 3);
-    const colors = new Float32Array(pointCount * 3);
-    const sizes = new Float32Array(pointCount);
-    const phases = new Float32Array(pointCount);
+    // ── Stars ──
+    const starCount = 800;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount * 3; i++) {
+      starPos[i] = (Math.random() - 0.5) * 200;
+    }
+    starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+    const stars = new THREE.Points(
+      starGeo,
+      new THREE.PointsMaterial({
+        color: 0x06b6d4,
+        size: 0.25,
+        transparent: true,
+        opacity: 0.4,
+        sizeAttenuation: true,
+      })
+    );
+    scene.add(stars);
 
-    for (let i = 0; i < pointCount; i++) {
-      let x, y, z;
-      if (i < 2500) {
-        const u = Math.random() * Math.PI * 2;
-        const v = Math.random() * Math.PI;
-        const rx = 2.5, ry = 0.8, rz = 1.0;
-        x = rx * Math.sin(v) * Math.cos(u);
-        y = ry * Math.cos(v) + 0.2;
-        z = rz * Math.sin(v) * Math.sin(u);
-        if (y < 0) y *= 0.3;
-      } else if (i < 3800) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 0.5 + Math.random() * 3;
-        x = Math.cos(angle) * dist;
-        z = Math.sin(angle) * dist * 0.6;
-        y = -0.2 + Math.random() * 0.4;
-      } else {
-        x = (Math.random() - 0.5) * 8;
-        z = (Math.random() - 0.5) * 5;
-        y = -0.8 + Math.random() * 0.3;
+    // ── Globe ──
+    const globe = new THREE.Mesh(
+      new THREE.SphereGeometry(1.5, 24, 24),
+      new THREE.MeshPhongMaterial({
+        color: 0x0a1628,
+        emissive: 0x06b6d4,
+        emissiveIntensity: 0.03,
+        transparent: true,
+        opacity: 0.3,
+      })
+    );
+    scene.add(globe);
+
+    const wireGlobe = new THREE.LineSegments(
+      new THREE.WireframeGeometry(new THREE.SphereGeometry(1.55, 16, 12)),
+      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.08 })
+    );
+    scene.add(wireGlobe);
+
+    // Lat circles
+    const latMat = new THREE.LineBasicMaterial({ color: 0x0d9488, transparent: true, opacity: 0.07 });
+    for (let lat = -60; lat <= 60; lat += 30) {
+      const rad = (lat * Math.PI) / 180;
+      const r = 1.5 * Math.cos(rad);
+      const y = 1.5 * Math.sin(rad);
+      const pts = [];
+      for (let i = 0; i <= 36; i++) {
+        const a = (i / 36) * Math.PI * 2;
+        pts.push(new THREE.Vector3(r * Math.cos(a), y, r * Math.sin(a)));
       }
-      x += (Math.random() - 0.5) * 0.06;
-      y += (Math.random() - 0.5) * 0.06;
-      z += (Math.random() - 0.5) * 0.06;
-      pos[i * 3] = x;
-      pos[i * 3 + 1] = y;
-      pos[i * 3 + 2] = z;
-      const c = 0.3 + (y + 0.8) / 2.5;
-      colors[i * 3] = 0.0 + c * 0.1;
-      colors[i * 3 + 1] = 0.5 + c * 0.3;
-      colors[i * 3 + 2] = 0.6 + c * 0.2;
-
-      sizes[i] = 0.04 + Math.random() * 0.12;
-      phases[i] = Math.random() * Math.PI * 2;
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), latMat));
     }
 
-    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    // ── Satellites ──
+    const satData = [
+      { radius: 3.2, speed: 0.5, tilt: 0.4, phase: 0, color: 0x06b6d4 },
+      { radius: 3.8, speed: -0.35, tilt: -0.6, phase: 2, color: 0x0d9488 },
+      { radius: 2.8, speed: 0.6, tilt: 0.8, phase: 4, color: 0x06b6d4 },
+      { radius: 4.2, speed: -0.25, tilt: -0.3, phase: 1, color: 0x0d9488 },
+      { radius: 3.5, speed: 0.4, tilt: 0.0, phase: 3, color: 0x06b6d4 },
+    ];
 
-    // Glow texture
-    const glowCanvas = document.createElement("canvas");
-    glowCanvas.width = 64;
-    glowCanvas.height = 64;
-    const gctx = glowCanvas.getContext("2d");
-    const grad = gctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grad.addColorStop(0, "rgba(255,255,255,1)");
-    grad.addColorStop(0.05, "rgba(180,240,255,1)");
-    grad.addColorStop(0.15, "rgba(6,182,212,0.9)");
-    grad.addColorStop(0.5, "rgba(6,182,212,0.4)");
-    grad.addColorStop(1, "rgba(6,182,212,0)");
-    gctx.fillStyle = grad;
-    gctx.fillRect(0, 0, 64, 64);
-    const glowTex = new THREE.CanvasTexture(glowCanvas);
+    const satellites = satData.map((sp) => {
+      const sat = new THREE.Mesh(
+        new THREE.SphereGeometry(0.08, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xffffff })
+      );
+      const glow = new THREE.Mesh(
+        new THREE.SphereGeometry(0.14, 8, 8),
+        new THREE.MeshBasicMaterial({ color: sp.color, transparent: true, opacity: 0.15 })
+      );
+      sat.add(glow);
 
-    const mat = new THREE.PointsMaterial({
-      size: 0.2,
-      map: glowTex,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.7,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      sizeAttenuation: true,
+      // Orbit ring
+      const orbitPts = [];
+      for (let i = 0; i <= 48; i++) {
+        const a = (i / 48) * Math.PI * 2;
+        orbitPts.push(new THREE.Vector3(sp.radius * Math.cos(a), 0, sp.radius * Math.sin(a)));
+      }
+      const orbitLine = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(orbitPts),
+        new THREE.LineBasicMaterial({ color: sp.color, transparent: true, opacity: 0.05 })
+      );
+      orbitLine.rotation.x = sp.tilt;
+
+      const g = new THREE.Group();
+      g.add(sat);
+      g.rotation.x = sp.tilt;
+      scene.add(orbitLine);
+      scene.add(g);
+      return { group: g, ...sp };
     });
 
-    const cloud = new THREE.Points(geo, mat);
-    scene.add(cloud);
-
-    // Sonar sweep ring
-    const ringMat = new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.12 });
-    const ringPoints = [];
-    for (let i = 0; i <= 48; i++) {
-      const a = (i / 48) * Math.PI * 2;
-      ringPoints.push(new THREE.Vector3(Math.cos(a) * 0.3, Math.sin(a) * 0.3, 0));
-    }
-    const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(ringPoints), ringMat);
-    const sweepGroup = new THREE.Group();
-    sweepGroup.add(ring);
-    scene.add(sweepGroup);
-
-    // Background ambient points
-    const bgCount = 800;
-    const bgGeo = new THREE.BufferGeometry();
-    const bgPos = new Float32Array(bgCount * 3);
-    for (let i = 0; i < bgCount; i++) {
-      bgPos[i * 3] = (Math.random() - 0.5) * 20;
-      bgPos[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      bgPos[i * 3 + 2] = (Math.random() - 0.5) * 10 - 5;
-    }
-    bgGeo.setAttribute("position", new THREE.BufferAttribute(bgPos, 3));
-    const bgCloud = new THREE.Points(bgGeo, new THREE.PointsMaterial({
-      color: 0x06b6d4, size: 0.04, transparent: true, opacity: 0.3,
-      map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
-    }));
-    scene.add(bgCloud);
-
-    const ambient = new THREE.AmbientLight(0x446688, 0.2);
+    // ── Lights ──
+    const ambient = new THREE.AmbientLight(0x446688, 0.15);
     scene.add(ambient);
-    const light = new THREE.DirectionalLight(0x88bbff, 0.35);
-    light.position.set(3, 5, 4);
+    const light = new THREE.DirectionalLight(0x88ccff, 0.3);
+    light.position.set(5, 10, 7);
     scene.add(light);
 
-    camera.position.set(3, 2, 4);
+    camera.position.set(0, 1.5, 7);
     camera.lookAt(0, 0, 0);
 
+    // ── Animation ──
     let t = 0;
     const anim = () => {
-      t += 0.005;
-      cloud.rotation.y += 0.0015;
-      cloud.rotation.x = Math.sin(t * 0.12) * 0.03;
-      bgCloud.rotation.y += 0.0003;
+      t += 0.006;
 
-      // Strong shining — pulse each vertex individually with random sparkle
-      const col = cloud.geometry.attributes.color.array;
-      for (let i = 0; i < pointCount; i++) {
-        const sparkle = Math.sin(t * 3.5 + phases[i] * 2) * 0.5 + 0.5;
-        const shine = 0.4 + sparkle * 0.3;
-        const ci = i * 3;
-        const c = 0.3 + (pos[ci + 1] + 0.8) / 2.5;
-        col[ci] = (0.0 + c * 0.1) * shine;
-        col[ci + 1] = (0.5 + c * 0.3) * shine;
-        col[ci + 2] = (0.6 + c * 0.2) * shine;
-      }
-      cloud.geometry.attributes.color.needsUpdate = true;
+      globe.rotation.y = t * 0.15;
+      wireGlobe.rotation.y = t * 0.15;
+      scene.children.forEach((child) => {
+        if (child.isLine && child.material.color && child.material.color.getHex() === 0x0d9488) {
+          child.rotation.y = t * 0.15;
+        }
+      });
 
-      // Pulse overall size/opacity
-      mat.size = 0.12 + Math.sin(t * 2.0) * 0.05;
-      mat.opacity = 0.6 + Math.sin(t * 1.8) * 0.1;
+      satellites.forEach((sp) => {
+        const angle = t * sp.speed + sp.phase;
+        const x = sp.radius * Math.cos(angle);
+        const z = sp.radius * Math.sin(angle);
+        sp.group.position.set(x, 0, z);
+      });
 
-      sweepGroup.position.x = Math.sin(t * 0.6) * 0.8;
-      sweepGroup.position.y = Math.cos(t * 0.4) * 0.3;
-      sweepGroup.position.z = Math.cos(t * 0.5) * 0.8;
-      const sweepScale = 1 + Math.sin(t * 1.3) * 0.4;
-      ring.scale.set(sweepScale, sweepScale, sweepScale);
-      ring.material.opacity = 0.08 + Math.sin(t * 1.3) * 0.06;
+      // Slow camera orbit
+      camera.position.x = 2.5 * Math.sin(t * 0.08);
+      camera.position.z = 7 + 1.5 * (Math.cos(t * 0.08) - 1);
+      camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
       animId = requestAnimationFrame(anim);
