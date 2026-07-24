@@ -1,7 +1,7 @@
 .experience {
   padding: 100px 8% 80px;
-  background-color: var(--bg-trench);
-  border-bottom: 1px solid var(--glass-border);
+  background-color: rgba(4, 8, 20, 0.85);
+  position: relative;
 }
 
 .experience-timeline {
@@ -11,6 +11,7 @@
   flex-direction: column;
   gap: 30px;
   position: relative;
+  z-index: 2;
 }
 
 /* Timeline vertical line */

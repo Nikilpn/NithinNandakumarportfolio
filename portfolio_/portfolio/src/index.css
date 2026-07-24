@@ -93,6 +93,7 @@ section {
   text-align: center;
   margin-bottom: 60px;
   position: relative;
+  z-index: 2;
 }
 
 .section-title h2 {
@@ -125,7 +126,12 @@ section {
   width: 100%;
 }
 
-/* Scrollbar Customization */
+/* Wrapper for connected section backgrounds */
+.skills-experience-wrapper {
+  position: relative;
+}
+
+/* Global Mobile Responsiveness */
 ::-webkit-scrollbar {
   width: 8px;
 }

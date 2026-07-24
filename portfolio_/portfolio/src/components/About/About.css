@@ -1,13 +1,30 @@
 .about {
   padding: 100px 8% 80px;
-  background-color: var(--bg-trench);
+  background-color: rgba(8, 17, 37, 0.82);
   color: var(--text-primary);
   border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-bg-anim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.about-bg-anim > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .about-content {
   max-width: 900px;
   margin: auto;
+  position: relative;
+  z-index: 2;
 }
 
 .about-content p {
@@ -28,6 +45,53 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 25px;
   margin-top: 45px;
+}
+
+/* Viz grid for Three.js animations */
+.about-viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+  margin-top: 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.about-viz-card {
+  background: var(--bg-abyss);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.about-viz-card:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-4px);
+}
+
+.about-viz-title {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--accent-cyan);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.about-viz-canvas {
+  width: 100%;
+  height: 260px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.three-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 
 .highlight-item {

@@ -1,8 +1,14 @@
 import "./About.css";
+import CoordSystem from "../Three/CoordSystem";
+import GpsSurvey from "../Three/GpsSurvey";
 
 function About() {
   return (
     <section id="about" className="about">
+      <div className="about-bg-anim">
+        <CoordSystem />
+        <GpsSurvey />
+      </div>
 
       <div className="section-title">
         <h2>About Me</h2>

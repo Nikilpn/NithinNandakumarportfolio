@@ -1,7 +1,9 @@
 .projects {
   padding: 100px 8% 80px;
-  background-color: var(--bg-abyss);
+  background-color: rgba(4, 8, 20, 0.85);
   border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
 }
 
 .projects-grid {
@@ -10,6 +12,8 @@
   gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .project-card {

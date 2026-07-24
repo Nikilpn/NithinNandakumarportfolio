@@ -1,8 +1,10 @@
 import "./Contact.css";
+import StarField from "../Three/StarField";
 
 function Contact() {
   return (
     <section id="contact" className="contact">
+      <StarField mouseInfluence={false} />
 
       <div className="section-title">
         <h2>Contact Me</h2>

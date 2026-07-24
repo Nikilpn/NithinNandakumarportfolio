@@ -1,0 +1,15 @@
+# Taste Profile
+- Communicates in Manglish (Malayalam+English mix) for casual instructions; expects assistant to understand and respond in English. Confidence: 1.0
+- Prefers visually consistent animations/starfield effects across ALL pages and sections, not just a single page. Confidence: 0.9
+- Prefers rich, immersive Three.js visualizations over simpler CSS animations — wants "adipoli" (awesome/impressive) quality. Confidence: 0.8
+- Wants portfolio visual identity (themes, animations, 3D graphics) to directly reflect their professional domain (hydrography, geodesy, surveying, maritime, geoinformatics). Confidence: 0.9
+- Prefers Three.js visualizations used as non-interactive, full-screen background layers (z-index 0) behind existing content — not as featured/interactive content blocks. Confidence: 1.0
+- Expects 3D background visualizations to use colors that match/harmonize with the site's overall color scheme — color palette cohesion is important, not just any visually impressive 3D. Confidence: 0.6
+- Strongly insists on keeping existing section content unchanged when adding visual effects — background visuals should never alter or disrupt the content layout. Confidence: 0.9
+- Expects Three.js/visual components to be mobile-responsive (resize handler, proper aspect ratio). Confidence: 0.7
+- On mobile, wants Three.js particle effects significantly toned down: 3-4x fewer particles, smaller particle size, lower opacity, and reduced twinkle intensity — prefers using `window.innerWidth`-based JS detection (not CSS alone) to auto-adjust between mobile and desktop. Confidence: 0.7
+- Prefers using `git checkout` / git commands to revert changes rather than manually undoing edits — expects assistant to leverage version control for clean undo. Confidence: 0.8
+- Prefers sparse, spread-out, and clean Three.js particle effects over dense/congested ones — "very congested" visuals should be fixed to be more breathable and less cluttered. Confidence: 0.6
+- Prefers particle effects to have visible shining/twinkling/sparkle animation (per-vertex brightness variation, pulsing glow) — explicitly notices and requests shine when it's missing; considers it essential to visual quality. Confidence: 0.7
+- Expects background 3D/visual layers (like starfields) to be practically visible — section backgrounds must use semi-transparent colors or adjusted z-indexing so the background effect actually shows through on all sections. Confidence: 0.6
+- On mobile, wants section-specific background opacity control to reduce starfield/visual noise — certain sections (like footer) should use fully opaque background colors (not just nearly opaque) on mobile so the background effect is completely eliminated in that section, while remaining visible elsewhere. Confidence: 0.8

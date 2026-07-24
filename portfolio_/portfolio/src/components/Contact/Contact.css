@@ -1,13 +1,17 @@
 .contact {
   padding: 100px 8% 80px;
-  background-color: var(--bg-abyss);
+  background-color: rgba(4, 8, 20, 0.85);
   border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .contact-card {

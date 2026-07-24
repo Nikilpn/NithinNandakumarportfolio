@@ -1,10 +1,11 @@
 import "./Projects.css";
-
+import DigitalTwin from "../Three/DigitalTwin";
 import { projectsData } from "../../data/projects";
 
 function Projects() {
   return (
     <section id="projects" className="projects">
+      <DigitalTwin />
 
       <div className="section-title">
         <h2>Projects</h2>

@@ -1,9 +1,7 @@
 .skills {
   padding: 100px 8% 80px;
-  background-color: var(--bg-abyss);
-  border-bottom: 1px solid var(--glass-border);
+  background-color: rgba(4, 8, 20, 0.88);
   position: relative;
-  overflow: hidden;
 }
 
 .skills-container {
@@ -13,7 +11,7 @@
   flex-direction: column;
   gap: 50px;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .skills-section {

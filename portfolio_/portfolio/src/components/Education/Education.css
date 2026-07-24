@@ -1,7 +1,9 @@
 .education {
   padding: 100px 8% 80px;
-  background-color: var(--bg-trench);
+  background-color: rgba(8, 17, 37, 0.82);
   border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
 }
 
 .education-grid {
@@ -10,6 +12,8 @@
   gap: 30px;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .education-card {

@@ -1,11 +1,9 @@
 import "./Skills.css";
 import { skillsData } from "../../data/skills";
-import ParticlesCanvas from "./ParticlesCanvas";
 
 function Skills() {
   return (
     <section id="skills" className="skills">
-      <ParticlesCanvas />
 
       <div className="section-title">
         <h2>Skills</h2>

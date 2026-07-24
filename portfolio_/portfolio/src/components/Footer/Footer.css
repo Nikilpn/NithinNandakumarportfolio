@@ -1,14 +1,18 @@
 .footer {
   padding: 50px 8% 40px;
-  background-color: #02040a;
+  background-color: rgba(2, 4, 10, 0.88);
   border-top: 1px solid var(--glass-border);
   color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
 }
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-logo {
@@ -76,6 +80,7 @@
 @media screen and (max-width: 600px) {
   .footer {
     padding: 40px 5% 30px;
+    background-color: #02040a;
   }
 
   .footer-links {
