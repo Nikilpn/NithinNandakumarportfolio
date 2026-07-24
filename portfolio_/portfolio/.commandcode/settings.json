@@ -10,7 +10,8 @@
       "Shell(npx vite --host 2 >& 1)",
       "Shell(sleep:*)",
       "Shell(head:*)",
-      "Shell(cd:*)"
+      "Shell(cd:*)",
+      "Shell({command::*)"
     ],
     "deny": [],
     "defaultMode": "default"

@@ -20,13 +20,13 @@ export default function GpsSurvey() {
     // Earth
     const earth = new THREE.Mesh(
       new THREE.SphereGeometry(2.5, 32, 32),
-      new THREE.MeshPhongMaterial({ color: 0x0a1628, emissive: 0x06b6d4, emissiveIntensity: 0.15, transparent: true, opacity: 0.6 })
+      new THREE.MeshPhongMaterial({ color: 0x0a1628, emissive: 0x06b6d4, emissiveIntensity: 0.05, transparent: true, opacity: 0.4 })
     );
     scene.add(earth);
 
     const gridLines = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.SphereGeometry(2.55, 16, 12)),
-      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.2 })
+      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.1 })
     );
     scene.add(gridLines);
 
@@ -41,7 +41,7 @@ export default function GpsSurvey() {
       const sat = new THREE.Mesh(new THREE.SphereGeometry(0.15, 8, 8), satMat);
       const glow = new THREE.Mesh(
         new THREE.SphereGeometry(0.22, 8, 8),
-        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.4 })
+        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.15 })
       );
       sat.add(glow);
       scene.add(sat);
@@ -88,9 +88,9 @@ export default function GpsSurvey() {
       scene.add(sprite);
     });
 
-    const ambient = new THREE.AmbientLight(0x224466, 0.4);
+    const ambient = new THREE.AmbientLight(0x224466, 0.2);
     scene.add(ambient);
-    const sun = new THREE.DirectionalLight(0x88ccff, 0.8);
+    const sun = new THREE.DirectionalLight(0x88ccff, 0.4);
     sun.position.set(10, 15, 5);
     scene.add(sun);
 

@@ -90,7 +90,7 @@ export default function PointCloud() {
       map: glowTex,
       vertexColors: true,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
       sizeAttenuation: true,
@@ -122,14 +122,14 @@ export default function PointCloud() {
     }
     bgGeo.setAttribute("position", new THREE.BufferAttribute(bgPos, 3));
     const bgCloud = new THREE.Points(bgGeo, new THREE.PointsMaterial({
-      color: 0x06b6d4, size: 0.05, transparent: true, opacity: 0.4,
+      color: 0x06b6d4, size: 0.04, transparent: true, opacity: 0.3,
       map: glowTex, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
     }));
     scene.add(bgCloud);
 
-    const ambient = new THREE.AmbientLight(0x446688, 0.3);
+    const ambient = new THREE.AmbientLight(0x446688, 0.2);
     scene.add(ambient);
-    const light = new THREE.DirectionalLight(0x88bbff, 0.5);
+    const light = new THREE.DirectionalLight(0x88bbff, 0.35);
     light.position.set(3, 5, 4);
     scene.add(light);
 
@@ -147,7 +147,7 @@ export default function PointCloud() {
       const col = cloud.geometry.attributes.color.array;
       for (let i = 0; i < pointCount; i++) {
         const sparkle = Math.sin(t * 3.5 + phases[i] * 2) * 0.5 + 0.5;
-        const shine = 0.5 + sparkle * 0.5;
+        const shine = 0.4 + sparkle * 0.3;
         const ci = i * 3;
         const c = 0.3 + (pos[ci + 1] + 0.8) / 2.5;
         col[ci] = (0.0 + c * 0.1) * shine;
@@ -157,8 +157,8 @@ export default function PointCloud() {
       cloud.geometry.attributes.color.needsUpdate = true;
 
       // Pulse overall size/opacity
-      mat.size = 0.15 + Math.sin(t * 2.0) * 0.06;
-      mat.opacity = 0.85 + Math.sin(t * 1.8) * 0.12;
+      mat.size = 0.12 + Math.sin(t * 2.0) * 0.05;
+      mat.opacity = 0.6 + Math.sin(t * 1.8) * 0.1;
 
       sweepGroup.position.x = Math.sin(t * 0.6) * 0.8;
       sweepGroup.position.y = Math.cos(t * 0.4) * 0.3;

@@ -28,7 +28,7 @@ export default function PipelineAnimation() {
     const nodeGeo = new THREE.BoxGeometry(1.8, 1.2, 0.6);
     stages.forEach((s) => {
       const mesh = new THREE.Mesh(nodeGeo, new THREE.MeshPhongMaterial({
-        color: s.color, emissive: s.color, emissiveIntensity: 0.3, transparent: true, opacity: 0.7,
+        color: s.color, emissive: s.color, emissiveIntensity: 0.1, transparent: true, opacity: 0.5,
       }));
       mesh.position.set(s.x, 0, 0);
       scene.add(mesh);

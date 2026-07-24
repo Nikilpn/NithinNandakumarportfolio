@@ -171,7 +171,7 @@ function InteractiveShipCanvas() {
 
         // AI constellation points floating in the background
         const aiParticles = [];
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 12; i++) {
             aiParticles.push({
                 x: Math.random(),
                 y: Math.random() * 0.35 + 0.05, // sky range
@@ -200,9 +200,9 @@ function InteractiveShipCanvas() {
             // 1. DRAW BACKGROUND & SCANNERS
             // ==========================================
             // Subtle background grid represent spatial mapping coordinate space
-            ctx.strokeStyle = "rgba(6, 182, 212, 0.04)";
+            ctx.strokeStyle = "rgba(6, 182, 212, 0.025)";
             ctx.lineWidth = 1;
-            const spacing = 40;
+            const spacing = 80;
             for (let x = 0; x < w; x += spacing) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
@@ -245,8 +245,8 @@ function InteractiveShipCanvas() {
                     const dy = py - p2.y * h;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 80) {
-                        ctx.strokeStyle = `rgba(13, 148, 136, ${0.12 * (1 - dist / 80)})`;
+                    if (dist < 60) {
+                        ctx.strokeStyle = `rgba(13, 148, 136, ${0.08 * (1 - dist / 60)})`;
                         ctx.beginPath();
                         ctx.moveTo(px, py);
                         ctx.lineTo(p2.x * w, p2.y * h);
@@ -419,11 +419,11 @@ function InteractiveShipCanvas() {
             // 6. DEEP SEABED BATHYMETRY WIREFRAME
             // ==========================================
             const seabedStartY = h * 0.78;
-            const rows = 12;
-            const cols = 22;
-            ctx.strokeStyle = "rgba(6, 182, 212, 0.16)";
-            ctx.lineWidth = 1;
-
+            const rows = 8;
+            const cols = 14;
+            ctx.strokeStyle = "rgba(6, 182, 212, 0.10)";
+            ctx.lineWidth = 0.5;
+            
             // Project grid vertices representing bathymetry
             const gridPoints = [];
             for (let r = 0; r < rows; r++) {

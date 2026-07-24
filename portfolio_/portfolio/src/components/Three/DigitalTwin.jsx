@@ -42,11 +42,11 @@ export default function DigitalTwin() {
     terrainGeo.computeVertexNormals();
 
     const terrain = new THREE.Mesh(terrainGeo, new THREE.MeshPhongMaterial({
-      color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.08, flatShading: true, transparent: true, opacity: 0.25, side: THREE.DoubleSide,
+      color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.03, flatShading: true, transparent: true, opacity: 0.15, side: THREE.DoubleSide,
     }));
     scene.add(terrain);
 
-    const buildingMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.05, transparent: true, opacity: 0.3 });
+    const buildingMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.02, transparent: true, opacity: 0.2 });
     [[-6, -3], [-4, -4.5], [-3, -2.5], [-5, -1.5], [-7, -4], [-2, -3.5], [-8, -2]].forEach(([bx, bz]) => {
       const bw = 0.3 + Math.random() * 0.4;
       const bh = 0.3 + Math.random() * 0.8;
@@ -58,7 +58,7 @@ export default function DigitalTwin() {
 
     const ocean = new THREE.Mesh(
       new THREE.PlaneGeometry(20, 14, 30, 20).rotateX(-Math.PI / 2),
-      new THREE.MeshPhongMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.08, side: THREE.DoubleSide })
+      new THREE.MeshPhongMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.04, side: THREE.DoubleSide })
     );
     ocean.position.y = 0.05;
     scene.add(ocean);
@@ -75,7 +75,7 @@ export default function DigitalTwin() {
       surveyPoints.push(dot);
       const glow = new THREE.Mesh(
         new THREE.RingGeometry(0.12, 0.18, 16),
-        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.3, side: THREE.DoubleSide })
+        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.15, side: THREE.DoubleSide })
       );
       glow.position.copy(dot.position);
       glow.rotation.x = -Math.PI / 2;
@@ -83,12 +83,12 @@ export default function DigitalTwin() {
       surveyPoints.push(glow);
     }
 
-    const ambient = new THREE.AmbientLight(0x88ccff, 0.4);
+    const ambient = new THREE.AmbientLight(0x88ccff, 0.2);
     scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0x88ccff, 0.8);
+    const dirLight = new THREE.DirectionalLight(0x88ccff, 0.4);
     dirLight.position.set(8, 15, 5);
     scene.add(dirLight);
-    const fillLight = new THREE.DirectionalLight(0x06b6d4, 0.3);
+    const fillLight = new THREE.DirectionalLight(0x06b6d4, 0.15);
     fillLight.position.set(-5, 5, -8);
     scene.add(fillLight);
 

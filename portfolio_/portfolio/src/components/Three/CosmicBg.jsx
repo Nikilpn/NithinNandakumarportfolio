@@ -29,10 +29,10 @@ export default function CosmicBg({ mouseInfluence = true }) {
     window.addEventListener("resize", resize);
 
     // ── Stars (fewer + smaller + dimmer on mobile) ──
-    const starCount = isMobile ? 800 : STAR_COUNT;
-    const starSize = isMobile ? 1.8 : 3.5;
-    const starOpacity = isMobile ? 0.6 : 1;
-    const twinkleStrength = isMobile ? 3 : 6;
+    const starCount = isMobile ? 800 : 2000;
+    const starSize = isMobile ? 1.5 : 2.5;
+    const starOpacity = isMobile ? 0.5 : 0.8;
+    const twinkleStrength = isMobile ? 2.5 : 5;
 
     const starGeo = new THREE.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
@@ -74,9 +74,9 @@ export default function CosmicBg({ mouseInfluence = true }) {
       new THREE.MeshPhongMaterial({
         color: 0x0a1628,
         emissive: 0x06b6d4,
-        emissiveIntensity: 0.2,
+        emissiveIntensity: 0.05,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.4,
       })
     );
     earth.position.set(-6, 0, -8);
@@ -84,13 +84,13 @@ export default function CosmicBg({ mouseInfluence = true }) {
 
     const wireGlobe = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.SphereGeometry(2.25, 16, 12)),
-      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.15 })
+      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.1 })
     );
     wireGlobe.position.copy(earth.position);
     scene.add(wireGlobe);
 
     // Lat circles
-    const latMat = new THREE.LineBasicMaterial({ color: 0x0d9488, transparent: true, opacity: 0.15 });
+    const latMat = new THREE.LineBasicMaterial({ color: 0x0d9488, transparent: true, opacity: 0.1 });
     for (let lat = -60; lat <= 60; lat += 30) {
       const rad = (lat * Math.PI) / 180;
       const r = 2.2 * Math.cos(rad);
@@ -116,7 +116,7 @@ export default function CosmicBg({ mouseInfluence = true }) {
       const sat = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), satMat);
       const glow = new THREE.Mesh(
         new THREE.SphereGeometry(0.18, 8, 8),
-        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.4 })
+        new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.25 })
       );
       sat.add(glow);
       const g = new THREE.Group();

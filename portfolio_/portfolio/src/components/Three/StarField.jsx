@@ -52,9 +52,9 @@ export default function StarField({ mouseInfluence = true }) {
 
     const material = new THREE.PointsMaterial({
       color: new THREE.Color("#06b6d4"),
-      size: 3.5,
+      size: 2.5,
       transparent: true,
-      opacity: 1,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
     });

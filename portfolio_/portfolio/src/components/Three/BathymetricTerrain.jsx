@@ -52,9 +52,9 @@ export default function BathymetricTerrain() {
     const material = new THREE.MeshPhongMaterial({
       vertexColors: true,
       flatShading: false,
-      shininess: 30,
+      shininess: 10,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.3,
       side: THREE.DoubleSide,
     });
 
@@ -65,17 +65,17 @@ export default function BathymetricTerrain() {
       wireframe: true,
       color: 0x06b6d4,
       transparent: true,
-      opacity: 0.05,
+      opacity: 0.025,
     });
     const wireframe = new THREE.Mesh(geometry.clone(), wireframeMat);
     scene.add(wireframe);
 
-    const ambient = new THREE.AmbientLight(0x4466aa, 0.5);
+    const ambient = new THREE.AmbientLight(0x4466aa, 0.25);
     scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0x88ccff, 1.0);
+    const dirLight = new THREE.DirectionalLight(0x88ccff, 0.5);
     dirLight.position.set(10, 20, 10);
     scene.add(dirLight);
-    const fillLight = new THREE.DirectionalLight(0x06b6d4, 0.4);
+    const fillLight = new THREE.DirectionalLight(0x06b6d4, 0.2);
     fillLight.position.set(-10, 5, -10);
     scene.add(fillLight);
 

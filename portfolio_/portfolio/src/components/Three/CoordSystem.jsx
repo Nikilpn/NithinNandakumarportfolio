@@ -40,7 +40,7 @@ export default function CoordSystem() {
     // Globe
     const globe = new THREE.Mesh(
       new THREE.SphereGeometry(1.8, 24, 24),
-      new THREE.MeshPhongMaterial({ color: 0x0a1628, emissive: 0x06b6d4, emissiveIntensity: 0.08, transparent: true, opacity: 0.3 })
+      new THREE.MeshPhongMaterial({ color: 0x0a1628, emissive: 0x06b6d4, emissiveIntensity: 0.03, transparent: true, opacity: 0.2 })
     );
     scene.add(globe);
 

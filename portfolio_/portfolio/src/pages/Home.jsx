@@ -8,7 +8,6 @@ import Education from "../components/Education/Education";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 import PointCloud from "../components/Three/PointCloud";
-import CoordSystem from "../components/Three/CoordSystem";
 import GpsSurvey from "../components/Three/GpsSurvey";
 
 function Home() {
@@ -18,7 +17,6 @@ function Home() {
       <Hero />
       <div className="page-sections">
         <div className="page-bg-anim">
-          <CoordSystem />
           <GpsSurvey />
         </div>
         <About />

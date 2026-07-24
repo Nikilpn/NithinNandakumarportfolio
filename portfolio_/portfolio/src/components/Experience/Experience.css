@@ -14,18 +14,6 @@
   z-index: 2;
 }
 
-/* Timeline vertical line */
-.experience-timeline::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: 20px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-teal));
-  opacity: 0.3;
-}
-
 .experience-card {
   background-color: var(--bg-abyss);
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -127,10 +115,6 @@
 @media screen and (max-width: 768px) {
   .experience {
     padding: 100px 5% 60px;
-  }
-
-  .experience-timeline::before {
-    left: 10px;
   }
 
   .experience-card {
