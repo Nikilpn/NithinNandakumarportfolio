@@ -1,7 +1,6 @@
 .education {
   padding: 100px 8% 80px;
-  background-color: rgba(8, 17, 37, 0.82);
-  border-bottom: 1px solid var(--glass-border);
+  background-color: rgba(2, 4, 10, 0.88);
   position: relative;
   overflow: hidden;
 }

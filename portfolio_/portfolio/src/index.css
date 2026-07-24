@@ -50,7 +50,7 @@ html {
 body {
   overflow-x: hidden;
   font-family: var(--font-body);
-  background-color: var(--bg-abyss);
+  background-color: rgba(2, 4, 10, 0.88);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -131,13 +131,32 @@ section {
   position: relative;
 }
 
+/* Shared 3D background animations spanning About + Skills */
+.about-skills-wrapper {
+  position: relative;
+  background-color: rgba(2, 4, 10, 0.88);
+}
+
+.about-skills-wrapper .about-bg-anim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.about-skills-wrapper .about-bg-anim > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 /* Global Mobile Responsiveness */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-abyss);
+  background: rgba(2, 4, 10, 0.88);
 }
 
 ::-webkit-scrollbar-thumb {
