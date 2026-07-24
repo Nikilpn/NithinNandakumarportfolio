@@ -1,7 +1,7 @@
 .contact {
   padding: 100px 8% 80px;
-  background-color: rgba(2, 4, 10, 0.88);
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 

@@ -126,25 +126,21 @@ section {
   width: 100%;
 }
 
-/* Wrapper for connected section backgrounds */
-.skills-experience-wrapper {
-  position: relative;
-}
-
-/* Shared 3D background animations spanning About + Skills */
-.about-skills-wrapper {
+/* Global wrapper for all page sections */
+.page-sections {
   position: relative;
   background-color: rgba(2, 4, 10, 0.88);
 }
 
-.about-skills-wrapper .about-bg-anim {
+/* Shared 3D background animations spanning all sections */
+.page-sections .page-bg-anim {
   position: absolute;
   inset: 0;
   z-index: 0;
   opacity: 0.35;
   pointer-events: none;
 }
-.about-skills-wrapper .about-bg-anim > * {
+.page-sections .page-bg-anim > * {
   position: absolute;
   width: 100%;
   height: 100%;

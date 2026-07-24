@@ -16,8 +16,8 @@ function Home() {
     <>
       <Navbar />
       <Hero />
-      <div className="about-skills-wrapper">
-        <div className="about-bg-anim">
+      <div className="page-sections">
+        <div className="page-bg-anim">
           <CoordSystem />
           <GpsSurvey />
         </div>
@@ -27,11 +27,11 @@ function Home() {
           <Skills />
           <Experience />
         </div>
+        <Projects />
+        <Education />
+        <Contact />
+        <Footer />
       </div>
-      <Projects />
-      <Education />
-      <Contact />
-      <Footer />
     </>
   );
 }

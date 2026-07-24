@@ -1,8 +1,8 @@
 .footer {
   padding: 50px 8% 40px;
-  background-color: rgba(2, 4, 10, 0.88);
   color: var(--text-secondary);
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -79,7 +79,6 @@
 @media screen and (max-width: 600px) {
   .footer {
     padding: 40px 5% 30px;
-    background-color: rgba(2, 4, 10, 0.88);
   }
 
   .footer-links {
