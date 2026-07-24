@@ -126,35 +126,47 @@ export default function CosmicBg({ mouseInfluence = true }) {
       return { mesh: sat, group: g, ...sp };
     });
 
-    // ── Floating Particles (less on mobile) ──
-    const pCount = isMobile ? 120 : 500;
-    const pSize = isMobile ? 0.04 : 0.08;
-    const pOpacity = isMobile ? 0.2 : 0.4;
-    const pGeo = new THREE.BufferGeometry();
-    const pPos = new Float32Array(pCount * 3);
-    const pPhases = new Float32Array(pCount);
-    const pSpeeds = new Float32Array(pCount);
-    for (let i = 0; i < pCount; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 3 + Math.random() * 6;
-      pPos[i * 3] = earth.position.x + Math.cos(angle) * radius;
-      pPos[i * 3 + 1] = (Math.random() - 0.5) * 6;
-      pPos[i * 3 + 2] = earth.position.z + Math.sin(angle) * radius;
-      pPhases[i] = Math.random() * Math.PI * 2;
-      pSpeeds[i] = 0.2 + Math.random() * 0.5;
-    }
-    pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+    // ── 3D Bathymetry Terrain ──
+    const terrainSize = 14;
+    const terrainSegs = 60;
+    const tGeo = new THREE.PlaneGeometry(terrainSize, terrainSize, terrainSegs, terrainSegs);
+    tGeo.rotateX(-Math.PI / 2);
 
-    const pMat = new THREE.PointsMaterial({
-      color: 0x06b6d4,
-      size: pSize,
+    const tPos = tGeo.attributes.position.array;
+    const tColors = new Float32Array(tPos.length);
+    for (let i = 0; i < tPos.length / 3; i++) {
+      const x = tPos[i * 3];
+      const z = tPos[i * 3 + 2];
+      const h =
+        Math.sin(x * 0.5) * Math.cos(z * 0.6) * 1.2 +
+        Math.sin(x * 0.9 + 1.5) * Math.cos(z * 0.7 + 1.0) * 0.6 +
+        Math.sin(x * 1.8 + 3.0) * Math.cos(z * 1.5 + 2.5) * 0.3;
+      tPos[i * 3 + 1] = h;
+      const t = (h + 2) / 4;
+      tColors[i * 3] = 0.0 + t * 0.02;
+      tColors[i * 3 + 1] = 0.15 + t * 0.35;
+      tColors[i * 3 + 2] = 0.4 + t * 0.3;
+    }
+    tGeo.setAttribute("color", new THREE.BufferAttribute(tColors, 3));
+    tGeo.computeVertexNormals();
+
+    const tMat = new THREE.MeshPhongMaterial({
+      vertexColors: true,
+      shininess: 8,
       transparent: true,
-      opacity: pOpacity,
-      blending: THREE.AdditiveBlending,
-      sizeAttenuation: true,
+      opacity: 0.15,
+      side: THREE.DoubleSide,
     });
-    const particles = new THREE.Points(pGeo, pMat);
-    scene.add(particles);
+    const terrain = new THREE.Mesh(tGeo, tMat);
+    terrain.position.set(3, -3, -6);
+    scene.add(terrain);
+
+    const tWire = new THREE.Mesh(
+      tGeo.clone(),
+      new THREE.MeshBasicMaterial({ wireframe: true, color: 0x06b6d4, transparent: true, opacity: 0.04 })
+    );
+    tWire.position.copy(terrain.position);
+    scene.add(tWire);
 
     // ── GPS Signal Ring ──
     const ringGeo = new THREE.RingGeometry(0.3, 0.4, 32);
@@ -246,12 +258,9 @@ export default function CosmicBg({ mouseInfluence = true }) {
       signalRing.geometry = new THREE.RingGeometry(size, size + 0.08, 32);
       signalRing.material.opacity = Math.max(0, 0.4 - (pulse % 6) / 12);
 
-      // Particles drift
-      const pPosArr = particles.geometry.attributes.position.array;
-      for (let i = 0; i < pCount; i++) {
-        pPosArr[i * 3 + 1] += Math.sin(time.t * pSpeeds[i] + pPhases[i]) * 0.002;
-      }
-      particles.geometry.attributes.position.needsUpdate = true;
+      // Animate terrain
+      terrain.rotation.y = time.t * 0.06;
+      tWire.rotation.y = time.t * 0.06;
 
       renderer.render(scene, camera);
       animId = requestAnimationFrame(anim);
