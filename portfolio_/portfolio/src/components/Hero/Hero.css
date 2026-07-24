@@ -1,10 +1,8 @@
 .hero {
   min-height: 100vh;
   background-color: rgba(2, 4, 10, 1);
-  background:
-    radial-gradient(circle at 10% 20%, rgba(2, 4, 10, 1) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(2, 4, 10, 1) 0%, transparent 45%),
-    linear-gradient(189deg, rgba(4, 8, 20, 0.5) 0%, rgba(2, 4, 10, 1));
+  background: radial-gradient(circle at 10% 20%, rgb(56 64 88) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(2, 4, 10, 1) 0%, transparent 45%), linear-gradient(1999deg, rgba(4, 8, 20, 0.5) 0%, #080a0f);
+
   display: flex;
   align-items: center;
   padding: 100px 8% 80px;
