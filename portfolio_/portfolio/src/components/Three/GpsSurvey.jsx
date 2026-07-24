@@ -59,20 +59,8 @@ export default function GpsSurvey() {
       rings.push(ring);
     }
 
-    // Ground station
-    const markerGroup = new THREE.Group();
-    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.2, 6), new THREE.MeshBasicMaterial({ color: 0x0d9488 }));
-    pole.position.y = 0.6;
-    markerGroup.add(pole);
-    const dish = new THREE.Mesh(
-      new THREE.SphereGeometry(0.25, 8, 6, 0, Math.PI * 2, 0, Math.PI / 2),
-      new THREE.MeshBasicMaterial({ color: 0xffffff })
-    );
-    dish.position.y = 1.3;
-    dish.rotation.x = 0.3;
-    markerGroup.add(dish);
-    markerGroup.position.set(0, -2.5, 2);
-    scene.add(markerGroup);
+    // Placeholder for future marker position
+    const markerPos = new THREE.Vector3(0, -2.5, 2);
 
     // Coordinate labels
     [{ text: "53.55°N 10.00°E", pos: new THREE.Vector3(-2.5, 2.5, 0) }].forEach(({ text, pos }) => {
@@ -118,7 +106,7 @@ export default function GpsSurvey() {
         const size = (pulse % 6) * 0.3 + 0.1;
         ring.geometry.dispose();
         ring.geometry = new THREE.RingGeometry(size, size + 0.08, 24);
-        ring.position.copy(markerGroup.position);
+        ring.position.copy(markerPos);
         ring.material.opacity = Math.max(0, 0.5 - (pulse % 6) / 12);
       });
 
