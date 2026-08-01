@@ -50,7 +50,11 @@ html {
 body {
   overflow-x: hidden;
   font-family: var(--font-body);
-  background-color: rgba(2, 4, 10, 0.88);
+  background-color: #040814;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(14, 34, 74, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 110%, rgba(6, 46, 60, 0.35) 0%, transparent 55%),
+    linear-gradient(180deg, #060d1f 0%, #040814 40%, #020409 100%);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -129,7 +133,7 @@ section {
 /* Global wrapper for all page sections */
 .page-sections {
   position: relative;
-  background-color: rgba(2, 4, 10, 0.88);
+  background: linear-gradient(180deg, rgba(6, 13, 31, 0.6) 0%, rgba(2, 4, 9, 0.4) 100%);
 }
 
 /* Shared 3D background animations spanning all sections */
