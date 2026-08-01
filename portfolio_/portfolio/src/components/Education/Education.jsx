@@ -1,10 +1,8 @@
 import "./Education.css";
-import StarField from "../Three/StarField";
 
 function Education() {
   return (
     <section id="education" className="education">
-      <StarField mouseInfluence={false} />
       <div className="section-title">
         <h2>Education</h2>
       </div>

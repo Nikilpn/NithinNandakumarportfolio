@@ -8,7 +8,6 @@ import Education from "../components/Education/Education";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
 import PointCloud from "../components/Three/PointCloud";
-import GpsSurvey from "../components/Three/GpsSurvey";
 
 function Home() {
   return (
@@ -16,9 +15,6 @@ function Home() {
       <Navbar />
       <Hero />
       <div className="page-sections">
-        <div className="page-bg-anim">
-          <GpsSurvey />
-        </div>
         <About />
         <div className="skills-experience-wrapper">
           <PointCloud />

@@ -299,39 +299,6 @@ function InteractiveShipCanvas() {
             // Transducer point (bottom of the keel) to emit sonar from
             const transducerPos = projShipPoints[1]; // bottom center bow/mid
 
-            // CELESTIAL ORBIT RINGS
-            const orbitCenterX = shipBaseX;
-            const orbitCenterY = h * 0.72;
-
-            // Three orbital rings with different sizes and speeds
-            const ringConfigs = [
-                { radius: 50, speed: 1.2, dash: 0, opacity: 0.12 },
-                { radius: 80, speed: -0.8, dash: 4, opacity: 0.08 },
-                { radius: 110, speed: 1.0, dash: 0, opacity: 0.06 },
-            ];
-
-            ringConfigs.forEach((rc, ri) => {
-                const angle = time * rc.speed + ri * Math.PI / 3;
-                ctx.strokeStyle = `rgba(6, 182, 212, ${rc.opacity})`;
-                ctx.lineWidth = 0.5;
-                ctx.setLineDash(rc.dash ? [rc.dash, rc.dash] : []);
-                ctx.beginPath();
-                ctx.ellipse(orbitCenterX, orbitCenterY, rc.radius, rc.radius * 0.35, angle * 0.1, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                // Orbiting dots
-                for (let d = 0; d < 3; d++) {
-                    const da = angle + (d * Math.PI * 2) / 3;
-                    const dx = orbitCenterX + rc.radius * Math.cos(da);
-                    const dy = orbitCenterY + rc.radius * 0.35 * Math.sin(da);
-                    ctx.fillStyle = `rgba(6, 182, 212, ${0.3 - ri * 0.08})`;
-                    ctx.beginPath();
-                    ctx.arc(dx, dy, 2 - ri * 0.3, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
-
             // ==========================================
             // 4. DRAW THE 3D MOUNTED SHIP MODEL
             // ==========================================

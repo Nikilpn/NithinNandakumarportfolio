@@ -168,19 +168,6 @@ export default function CosmicBg({ mouseInfluence = true }) {
     tWire.position.copy(terrain.position);
     scene.add(tWire);
 
-    // ── GPS Signal Ring ──
-    const ringGeo = new THREE.RingGeometry(0.3, 0.4, 32);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x06b6d4,
-      transparent: true,
-      opacity: 0,
-      side: THREE.DoubleSide,
-    });
-    const signalRing = new THREE.Mesh(ringGeo, ringMat);
-    signalRing.position.set(-6, -2.2, -6);
-    signalRing.rotation.x = -Math.PI / 2;
-    scene.add(signalRing);
-
     // ── Lights ──
     const ambient = new THREE.AmbientLight(0x446688, 0.3);
     scene.add(ambient);
@@ -250,13 +237,6 @@ export default function CosmicBg({ mouseInfluence = true }) {
         );
         sat.mesh.lookAt(earth.position);
       });
-
-      // Signal ring pulse
-      const pulse = time.t * 1.5;
-      const size = (pulse % 6) * 0.3 + 0.1;
-      signalRing.geometry.dispose();
-      signalRing.geometry = new THREE.RingGeometry(size, size + 0.08, 32);
-      signalRing.material.opacity = Math.max(0, 0.4 - (pulse % 6) / 12);
 
       // Animate terrain
       terrain.rotation.y = time.t * 0.06;
