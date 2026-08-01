@@ -89,8 +89,6 @@ function InteractiveShipCanvas() {
 
         // Configuration / Theme Variables
         const colorCyan = "#06b6d4";
-        const colorTeal = "#0d9488";
-        const colorBlue = "#3b82f6";
 
         // Set high-DPI scaling
         const resizeCanvas = () => {
@@ -297,7 +295,6 @@ function InteractiveShipCanvas() {
             );
 
             // Transducer point (bottom of the keel) to emit sonar from
-            const transducerPos = projShipPoints[1]; // bottom center bow/mid
 
             // ==========================================
             // 4. DRAW THE 3D MOUNTED SHIP MODEL
@@ -421,7 +418,6 @@ function InteractiveShipCanvas() {
             }
 
             // SUBTLE GRID PULSE
-            const pulsePhase = Math.sin(time * 1.5) * 0.5 + 0.5;
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     const pt = gridPoints[r][c];

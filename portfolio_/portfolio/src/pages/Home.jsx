@@ -7,7 +7,6 @@ import Projects from "../components/Projects/Projects";
 import Education from "../components/Education/Education";
 import Contact from "../components/Contact/Contact";
 import Footer from "../components/Footer/Footer";
-import PointCloud from "../components/Three/PointCloud";
 
 function Home() {
   return (
@@ -17,7 +16,6 @@ function Home() {
       <div className="page-sections">
         <About />
         <div className="skills-experience-wrapper">
-          <PointCloud />
           <Skills />
           <Experience />
         </div>
