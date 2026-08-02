@@ -1,32 +1,37 @@
 import "./Education.css";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function Education() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <section id="education" className="education">
       <div className="section-title">
-        <h2>Education</h2>
+        <h2>{t.education.title}</h2>
       </div>
 
       <div className="education-grid">
         <div className="education-card">
           <div className="education-header">
-            <h3>M.Sc. Geodesy & Geoinformatics (Hydrography CAT-A)</h3>
-            <span className="education-date">2022 - 2027 (Expected)</span>
+            <h3>{t.education.mscDegree}</h3>
+            <span className="education-date">{t.education.mscDate}</span>
           </div>
-          <p className="education-institution">HafenCity Universität Hamburg, Germany</p>
+          <p className="education-institution">{t.education.mscInstitution}</p>
           <div className="education-courses">
-            <strong>Key Courses:</strong> Hydrographic Data Processing, Advanced Hydrography, Geodetic Data Processing, Bathymetry, Oceanographic Data Processing, Electronic Navigational Charts (ENC), Spatial Data Analysis, Ship Alignment Survey, Kalman Filter, Terrestrial Laser Scanning.
+            <strong>{t.education.keyCourses}</strong> {t.education.mscCourses}
           </div>
         </div>
 
         <div className="education-card">
           <div className="education-header">
-            <h3>B.Tech. Mechanical Engineering</h3>
-            <span className="education-date">2014 - 2018</span>
+            <h3>{t.education.btechDegree}</h3>
+            <span className="education-date">{t.education.btechDate}</span>
           </div>
-          <p className="education-institution">University of Calicut, Kerala, India</p>
+          <p className="education-institution">{t.education.btechInstitution}</p>
           <p className="education-activity">
-            <strong>Activities & Projects:</strong> National Service Scheme (NSS) Volunteer. B.Tech thesis project on stabilizing stretchers in emergency ambulances (IRJET certified).
+            <strong>{t.education.activities}</strong> {t.education.btechActivity}
           </p>
         </div>
       </div>

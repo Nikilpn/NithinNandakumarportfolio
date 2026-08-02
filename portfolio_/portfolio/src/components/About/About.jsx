@@ -1,38 +1,43 @@
 import "./About.css";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function About() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <section id="about" className="about">
 
       <div className="section-title">
-        <h2>About Me</h2>
+        <h2>{t.about.title}</h2>
       </div>
 
       <div className="about-content">
 
         <p>
-          As a Hydrographic Surveyor intern at <strong>HydroCharting ApS</strong>, I contribute to high-quality hydrographic assessments through sensor mobilization, USBL calibration, and ROV surveying. With hands-on experience in data acquisition using Qinsy, I support the development of precise survey monitoring and comprehensive reporting to aid informed decision-making.
+          {t.about.p1} <strong>{t.about.p1Company}</strong>{t.about.p1Rest}
         </p>
 
         <p>
-          I am pursuing an M.Sc. in Geodesy and Geoinformatics at <strong>HafenCity Universität Hamburg</strong>, specializing in hydrography (IHO/FIG/ICA CAT A). My academic and professional journey is complemented by a background in mechanical engineering and certifications in industrial safety and occupational health, fostering a multidisciplinary perspective in hydrographic surveying and geospatial solutions.
+          {t.about.p2Start} <strong>{t.about.p2University}</strong>{t.about.p2Rest}
         </p>
 
         <div className="about-highlights">
           <div className="highlight-item">
             <span className="highlight-icon">⚓</span>
-            <h4>CAT-A Hydrography</h4>
-            <p>IHO / FIG / ICA Category A professional specialization</p>
+            <h4>{t.about.highlight1Title}</h4>
+            <p>{t.about.highlight1Text}</p>
           </div>
           <div className="highlight-item">
             <span className="highlight-icon">🛰️</span>
-            <h4>Geoinformatics</h4>
-            <p>Spatial analysis & seafloor mapping at HafenCity Uni, Hamburg</p>
+            <h4>{t.about.highlight2Title}</h4>
+            <p>{t.about.highlight2Text}</p>
           </div>
           <div className="highlight-item">
             <span className="highlight-icon">⚙️</span>
-            <h4>Mechanical Eng.</h4>
-            <p>Solid mechanical background (B.Tech) with industrial forging focus</p>
+            <h4>{t.about.highlight3Title}</h4>
+            <p>{t.about.highlight3Text}</p>
           </div>
         </div>
 

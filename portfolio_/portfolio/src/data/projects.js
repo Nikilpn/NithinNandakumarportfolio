@@ -1,4 +1,5 @@
-export const projectsData = [
+export const projectsData = {
+  en: [
     {
         title: "Sensitivity Analysis of MBES and SSS for Temperature Changes",
         institution: "HafenCity Universität Hamburg",
@@ -43,4 +44,51 @@ export const projectsData = [
             "Published and certified the design under the International Research Journal of Engineering and Technology (IRJET)."
         ]
     }
-];
+  ],
+  de: [
+    {
+        title: "Sensitivitätsanalyse von Fächer- und Seitensichtsonar bei Temperaturänderungen",
+        institution: "HafenCity Universität Hamburg",
+        period: "Mai 2024 – Jan 2025",
+        description: "Untersuchung, wie Temperaturschwankungen des Wassers das Schallgeschwindigkeitsprofil (SVP) beeinflussen und die Datenqualität von Fächerecholoten (MBES) und Seitensichtsonaren (SSS) in kontrollierten Versuchsaufbauten beeinträchtigen.",
+        tools: ["QPS QINSy", "Qimera", "QGIS", "CARIS HIPS & SIPS", "SVP-Korrektur"],
+        highlights: [
+            "Quantifizierung von Echolot-Refraktionsfehlern durch dynamische thermische Grenzschichten in Wassersäulen.",
+            "Validierung der Verarbeitungsergebnisse gegen die strengen Genauigkeitsanforderungen der Sonderklasse der Internationalen Hydrografischen Organisation (IHO) S-44."
+        ]
+    },
+    {
+        title: "Identifizierung eines Schiffsunglücks & bathymetrische Visualisierung",
+        institution: "HafenCity Universität Hamburg",
+        period: "Mai 2024",
+        description: "Durchführung hochauflösender Meeresbodenkartierung zur Suche, Isolierung und Identifizierung eines historischen Schiffsunglücks in deutschen Gewässern mit Echolotdaten und Magnetometer-Validierungen.",
+        tools: ["QPS QINSy", "Qimera", "Fledermaus", "QGIS", "Magnetometeranalyse"],
+        highlights: [
+            "Verarbeitung roher bathymetrischer Echolotdaten zur Rekonstruktion vollständiger 3D-Mesh-Visualisierungen der Wrackstruktur.",
+            "Analyse und Korrelation von Magnetometer-Anomalien zur Bestätigung von Metallrümpfen/Struktureisen."
+        ]
+    },
+    {
+        title: "MBES-Patch-Test & Kalibrierung auf der Elbe",
+        institution: "HafenCity Universität Hamburg",
+        period: "Apr 2022 – Dez 2023",
+        description: "Durchführung vollständiger Sensorausrichtungs- und akustischer Kalibrierungskampagnen auf der Elbe in Hamburg mit Standard-Vermessungsschiffen.",
+        tools: ["Hypack", "Patch-Test-Kalibrierung", "Bar Check", "Hydrografische Vermessung"],
+        highlights: [
+            "Bestimmung der Montageoffsets (Roll, Pitch, Gier und Latenz) durch überlappende Kalibrierungsmessfahrten.",
+            "Kalibrierung von Tiefgang- und Indexfehlern mit mechanischen Bar-Check-Referenzen vor Vermessungsbeginn."
+        ]
+    },
+    {
+        title: "Stabilisierung der Krankentrage in einem Notfallkrankenwagen",
+        institution: "University of Calicut (IRJET-zertifiziert)",
+        period: "Jun 2018",
+        description: "Entwicklung und Prototyp eines selbststabilisierenden mechanischen Tragenhalters zur Minimierung von Patienten-Beschleunigungen und Stoßbelastungen bei schnellen Notfallfahrten.",
+        tools: ["SolidWorks CAD", "Finite-Elemente-Analyse (FEA)", "Strukturdynamik", "Prototyping"],
+        highlights: [
+            "Durchführung von Spannungsanalysen an Tragstrukturen und Konstruktion von Dämpfungsgliedern nach mechanischen Prinzipien.",
+            "Veröffentlichung und Zertifizierung des Entwurfs im International Research Journal of Engineering and Technology (IRJET)."
+        ]
+    }
+  ]
+};

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaVolumeUp, FaPause } from "react-icons/fa";
 
 import "./ListenButton.css";
+import { useLanguage } from "../../context/LanguageContext";
 
 const VOICEOVER_EN =
   "Hello and welcome to my portfolio. I am Nithin Nandakumar, a hydrographic surveyor based in Hamburg, Germany. " +
@@ -43,7 +44,7 @@ function pickVoice(lang) {
 }
 
 function ListenButton() {
-  const [lang, setLang] = useState("en");
+  const { lang } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const speakingRef = useRef(false);
 
@@ -98,13 +99,6 @@ function ListenButton() {
     }
   };
 
-  const toggleLanguage = (e) => {
-    e.stopPropagation();
-    const next = lang === "en" ? "de" : "en";
-    setLang(next);
-    if (speakingRef.current) speak(next);
-  };
-
   // Pause the voiceover while the AI assistant is speaking
   useEffect(() => {
     const handleAssistantSpeaking = (e) => {
@@ -135,7 +129,6 @@ function ListenButton() {
 
         <span
           className={`listen-lang ${lang === "de" ? "active" : ""}`}
-          onClick={toggleLanguage}
           title="English / Deutsch"
         >
           {lang === "en" ? "EN" : "DE"}

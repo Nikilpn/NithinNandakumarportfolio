@@ -1,19 +1,24 @@
 import "./Projects.css";
 import DigitalTwin from "../Three/DigitalTwin";
 import { projectsData } from "../../data/projects";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function Projects() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <section id="projects" className="projects">
       <DigitalTwin />
 
       <div className="section-title">
-        <h2>Projects</h2>
+        <h2>{t.projects.title}</h2>
       </div>
 
       <div className="projects-grid">
 
-        {projectsData.map((project, index) => (
+        {projectsData[lang].map((project, index) => (
 
           <div className="project-card" key={index}>
 

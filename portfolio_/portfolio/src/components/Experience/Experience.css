@@ -114,7 +114,7 @@
 
 @media screen and (max-width: 768px) {
   .experience {
-    padding: 100px 5% 60px;
+    padding: 0px 5% 60px;
   }
 
   .experience-card {

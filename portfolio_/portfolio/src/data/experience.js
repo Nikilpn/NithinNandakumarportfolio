@@ -1,4 +1,5 @@
-export const experienceData = [
+export const experienceData = {
+  en: [
     {
         role: "Hydrographic Surveyor Intern",
         company: "HydroCharting ApS",
@@ -37,4 +38,45 @@ export const experienceData = [
             "Operated and conducted maintenance reviews on heavy industrial machining equipment and transport vehicles."
         ]
     }
-];
+  ],
+  de: [
+    {
+        role: "Hydrografie-Vermessungspraktikant",
+        company: "HydroCharting ApS",
+        location: "Helsingør, Dänemark (Remote & Offshore)",
+        period: "Aug 2025 - Jan 2026",
+        duration: "6 Monate",
+        highlights: [
+            "Durchführung von Offshore-Mehrstrahlvermessungen mit R2Sonic-Systemen, Integration von Septentrio-GNSS- und SBG-Trägheitssensoren, einschließlich USBL-Kalibrierung (Sonardyne), SVP-Erfassung und -Korrektur mit Valeport Swift für hochpräzise Positionierung.",
+            "Überwachung von ROV-Vermessungen entlang von Unterwasser-Kabelgräben zur Bestimmung der Verlegetiefe und Qualitätskontrolle, Unterstützung von Baggerverfüllungen, Rastervergleichen für Steinschüttungen und USBL-Positionierung für Matratzenverlegung.",
+            "Durchführung umfassender hydrografischer Datenverarbeitung, -bereinigung und 3D-Visualisierung mit QPS Qinsy, Qimera, Fledermaus und FMGT sowie Erstellung bathymetrischer Karten und Kartierungsprodukte in ArcGIS Pro für Kundenberichte und Entscheidungsfindung.",
+            "Erstellung und Lieferung detaillierter täglicher Fortschrittsberichte mit Zusammenfassung von Vermessungsoperationen, Gerätezustand, Rohdatenqualität und abgeschlossenen Arbeitsumfängen.",
+            "Unterstützung bei der Kalibrierung des Zweikopf-Mehrstrahlecholots (MBES), der Sensormobilisierung und der DVL/USBL-Systemkonfiguration."
+        ]
+    },
+    {
+        role: "Junior-Ingenieur",
+        company: "Edvisor Engineering",
+        location: "Indien",
+        period: "Okt 2019 - Okt 2021",
+        duration: "2 J. 1 M.",
+        highlights: [
+            "Durchführung von AQL-Inspektionen (Acceptable Quality Level) gemäß ISO 2859-1 zur Produktbewertung.",
+            "Bewertung von Produkthaltbarkeit, Sicherheit und allgemeiner Fertigungsqualität.",
+            "Teilnahme an Montageprüfungen und technischen QA-Gremien zur Lösung von Fertigungs- und Industriebauproblemen."
+        ]
+    },
+    {
+        role: "Praktikant",
+        company: "Steel and Industrial Forgings Ltd (Regierungsbetrieb Kerala)",
+        location: "Thrissur, Kerala, Indien",
+        period: "Mär 2017 - Jun 2017 & Sep 2018 - Nov 2018",
+        duration: "7 Monate gesamt",
+        highlights: [
+            "Erfahrung in industriellem Schmieden, Warmschmieden und Wärmebehandlungsprozessen von Werkstoffen.",
+            "Präzises Wissen über Materialzusammensetzungen und automatisierte Fertigungsmaschinen erworben.",
+            "Bedienung und Wartungsprüfungen schwerer industrieller Bearbeitungsmaschinen und Transportfahrzeuge."
+        ]
+    }
+  ]
+};

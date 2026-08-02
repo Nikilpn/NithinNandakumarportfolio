@@ -5,6 +5,7 @@ import { FaTimes, FaRobot, FaVolumeUp, FaLanguage } from "react-icons/fa";
 import knowledgeBase from "../../data/assistantData";
 
 import "./Assistant.css";
+import { useLanguage } from "../../context/LanguageContext";
 
 const GERMAN_HINTS = /(wer|wie|was|wo|für|über|praktikum|studium|projekte|fähigkeiten|kontakt|erfahrung|ausbildung|bitte|hallo|servus|guten|danke|ja|nein)/i;
 
@@ -19,12 +20,12 @@ function pickVoice(lang) {
 }
 
 function Assistant() {
+  const { lang, toggleLang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [speaking, setSpeaking] = useState(false);
-  const [lang, setLang] = useState("en");
 
   const chatBodyRef = useRef(null);
   const lastBotMessageRef = useRef(null);
@@ -96,7 +97,7 @@ function Assistant() {
 
   const toggleLanguage = () => {
     const next = lang === "en" ? "de" : "en";
-    setLang(next);
+    toggleLang();
     const confirmation =
       next === "de"
         ? "Ich antworte jetzt auf Deutsch. Frag mich zum Beispiel: „Was sind Nithins Projekte?“"

@@ -1,16 +1,21 @@
 // src/components/Footer/Footer.jsx
 
 import "./Footer.css";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function Footer() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <footer className="footer">
       <div className="footer-container">
 
-        <h2 className="footer-logo">Nithin Nandakumar</h2>
+        <h2 className="footer-logo">{t.footer.title}</h2>
 
         <p className="footer-text">
-          M.Sc. Geodesy and Geoinformatics | Hydrography Specialization (IHO CAT-A)
+          {t.footer.subtitle}
         </p>
 
         <div className="footer-links">
@@ -19,16 +24,16 @@ function Footer() {
             target="_blank"
             rel="noreferrer"
           >
-            LinkedIn
+            {t.footer.linkedin}
           </a>
 
           <a href="mailto:nithinnandakumar066@gmail.com">
-            Email
+            {t.footer.email}
           </a>
         </div>
 
         <p className="footer-copy">
-          © 2026 Nithin Nandakumar. All Rights Reserved.
+          {t.footer.rights}
         </p>
 
       </div>

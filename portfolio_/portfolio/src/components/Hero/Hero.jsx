@@ -1,21 +1,26 @@
 import "./Hero.css";
 import InteractiveShipCanvas from "./InteractiveShipCanvas";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function Hero() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <section id="home" className="hero">
       <div className="hero-container">
         <div className="hero-content">
           <h1>
-            Hi, I'm <span>Nithin Nandakumar</span>
+            {t.hero.greeting} <span>Nithin Nandakumar</span>
           </h1>
 
           <h2>
-            M.Sc. Geodesy & Geoinformatics <span className="separator">|</span> Hydrography (IHO CAT-A)
+            {t.hero.subtitle}
           </h2>
 
           <p>
-            Specializing in high-resolution seafloor mapping, hydrographic data acquisition (QINSy, Qimera, CARIS), and spatial geodata solutions. Fostering a multidisciplinary perspective between mechanical engineering and geospatial science offshore and onshore.
+            {t.hero.description}
           </p>
 
           <div className="hero-buttons">
@@ -25,7 +30,7 @@ function Hero() {
               className="hero-link"
             >
               <button>
-                Download Resume
+                {t.hero.downloadResume}
               </button>
             </a>
 
@@ -34,7 +39,7 @@ function Hero() {
               className="hero-link"
             >
               <button className="outline-btn">
-                View Projects
+                {t.hero.viewProjects}
               </button>
             </a>
           </div>

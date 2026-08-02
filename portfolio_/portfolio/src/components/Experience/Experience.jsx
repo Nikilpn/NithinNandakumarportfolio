@@ -1,18 +1,23 @@
 import "./Experience.css";
 
 import { experienceData } from "../../data/experience";
+import { useLanguage } from "../../context/LanguageContext";
+import { translations } from "../../data/translations";
 
 function Experience() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
   return (
     <section id="experience" className="experience">
 
       <div className="section-title">
-        <h2>Experience</h2>
+        <h2>{t.experience.title}</h2>
       </div>
 
       <div className="experience-timeline">
 
-        {experienceData.map((job, index) => (
+        {experienceData[lang].map((job, index) => (
 
           <div className="experience-card" key={index}>
 

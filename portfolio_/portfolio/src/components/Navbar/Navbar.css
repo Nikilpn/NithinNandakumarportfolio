@@ -5,8 +5,8 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 0 8%;
   position: fixed;
   top: 0;
@@ -27,11 +27,19 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+/* Center the nav menu between logo and lang toggle */
+.nav-menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-links {
   display: flex;
-  gap: 30px;
+  gap: 26px;
   list-style: none;
 }
 
@@ -45,6 +53,7 @@
   letter-spacing: 0.05em;
   padding: 8px 0;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-links a::after {
@@ -65,6 +74,30 @@
 
 .nav-links a:hover::after {
   width: 100%;
+}
+
+/* Language toggle button */
+.nav-lang-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.nav-lang-btn:hover,
+.nav-lang-btn.active {
+  color: var(--text-active);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+  background: rgba(34, 211, 238, 0.08);
 }
 
 /* Toggle Button styling */
@@ -126,6 +159,16 @@
   top: 0;
 }
 
+@media screen and (max-width: 1024px) {
+  .nav-links {
+    gap: 18px;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .navbar {
     padding: 0 5%;
@@ -144,6 +187,8 @@
     position: fixed;
     top: 70px;
     right: -100%;
+    left: auto;
+    transform: none;
     width: 260px;
     height: calc(100vh - 70px);
     background-color: rgba(2, 4, 10, 0.88);
@@ -161,13 +206,27 @@
 
   .nav-links {
     flex-direction: column;
-    gap: 30px;
+    gap: 28px;
     align-items: flex-start;
   }
 
   .nav-links a {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     width: 100%;
     display: block;
+  }
+
+  .nav-lang-btn {
+    position: fixed;
+    top: 20px;
+    right: calc(5% + 50px);
+    margin-left: 0;
+    z-index: 1005;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .nav-lang-btn {
+    right: calc(4% + 46px);
   }
 }
