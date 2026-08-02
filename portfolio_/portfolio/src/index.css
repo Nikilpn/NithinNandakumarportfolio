@@ -170,6 +170,10 @@ section {
 
 /* Global Mobile Responsiveness */
 @media screen and (max-width: 768px) {
+  html {
+    scroll-padding-top: 70px;
+  }
+
   section {
     padding: 80px 5% 60px;
   }
